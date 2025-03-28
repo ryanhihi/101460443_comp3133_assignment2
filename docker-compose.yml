@@ -1,0 +1,63 @@
+#Set-up instruction
+#1. To build and run for the first time
+#  docker-compose up --build
+#  builds the images and starts the containers
+
+#2. Run the Application again
+#  docker-compose up
+
+#3. Stop running the containers:
+#  docker-compose down
+
+#4. To rebuild the images
+#  docker-compose up --build
+
+
+
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      -'3000:3000'
+    depends_on:
+      -backend
+    environment:
+      - ANGULAR_APP_BACKEND_URL=http://backend:5000
+
+  
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/myAssignemntDatabase
+
+  
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27107'
+    volumes:
+      - mongo-data:/data/myAssignemntDatabase
+
+  
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      -'8081:8081'
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo-data
+      

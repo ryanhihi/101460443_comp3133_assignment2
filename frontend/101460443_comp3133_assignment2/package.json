@@ -1,5 +1,5 @@
 {
-  "name": "101460443-comp3133-aassignment2",
+  "name": "101460443-comp3133-assignment2",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:101460443_comp3133_aassignment2": "node dist/101460443_comp3133_aassignment2/server/server.mjs"
+    "serve:ssr:101460443_comp3133_assignment2": "node dist/101460443_comp3133_assignment2/server/server.mjs"
   },
   "private": true,
   "dependencies": {

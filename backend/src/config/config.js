@@ -1,7 +1,7 @@
 const CFG = {
-    PORT: 5000,
+    SERVER_PORT: 5000,
     MONGODB_URI: 'mongodb://mongodb:27017/Comp3133A2Database',
-    SECRET: 'LoremIpsumissimplydummytext'
+    SECRET: 'Remembermeplease'
 };
 
 module.exports = CFG;

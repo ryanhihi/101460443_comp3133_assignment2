@@ -1,63 +1,57 @@
-#Set-up instruction
-#1. To build and run for the first time
-#  docker-compose up --build
-#  builds the images and starts the containers
-
-#2. Run the Application again
-#  docker-compose up
-
-#3. Stop running the containers:
-#  docker-compose down
-
-#4. To rebuild the images
-#  docker-compose up --build
-
-
+# Set-up instruction
+# 1. To build and run for the first time:
+#    docker-compose up --build
+#    builds the images and starts the containers
+#
+# 2. Run the Application again:
+#    docker-compose up
+#
+# 3. Stop running the containers:
+#    docker-compose down
+#
+# 4. To rebuild the images:
+#    docker-compose up --build
 
 version: '3'
 services:
   frontend:
     build:
-      context: ./frontend
-      dockerfile: dockerfile
+      context: ./frontend/101460443_comp3133_assignment2
+      dockerfile: Dockerfile
     ports:
-      -'3000:3000'
+      - '4200:4200'
     depends_on:
-      -backend
+      - backend
     environment:
+      - PORT=4200
       - ANGULAR_APP_BACKEND_URL=http://backend:5000
-
-  
 
   backend:
     build:
       context: ./backend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - '5000:5000'
     depends_on:
       - mongodb
     environment:
-      - MONGO_URI=mongodb://mongo:27017/myAssignemntDatabase
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
 
-  
   mongodb:
     image: mongo
     ports:
-      - '27017:27107'
+      - '27017:27017'
     volumes:
-      - mongo-data:/data/myAssignemntDatabase
-
+      - mongo-data:/data/db
   
   mongo-express:
     image: mongo-express:latest
     ports:
-      -'8081:8081'
+      - '8081:8081'
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongodb
     depends_on:
       - mongodb
 
 volumes:
-  mongo-data
-      
+  mongo-data:

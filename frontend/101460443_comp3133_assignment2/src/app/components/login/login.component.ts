@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-//import { AuthServices } from ;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email: string = '';
-  password: string ='';
+  loginForm: FormGroup;
 
-  constructor() {}
-
-  login() {
-    
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
   }
 
+  onSubmit() {
+    console.log(this.loginForm.value);
+    // Send login details to backend
+  }
 }

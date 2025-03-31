@@ -12,8 +12,19 @@
 # 4. To rebuild the images:
 #    docker-compose up --build
 
-version: '3'
+version: '3.8'
 services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - '5000:5000'
+    networks:
+      - app-network
+  
   frontend:
     build:
       context: ./frontend/101460443_comp3133_assignment2
@@ -22,36 +33,29 @@ services:
       - '4200:4200'
     depends_on:
       - backend
-    environment:
-      - PORT=4200
-      - ANGULAR_APP_BACKEND_URL=http://backend:5000
+    
+networks:
+  app-network:
+    driver: bridge
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - '5000:5000'
-    depends_on:
-      - mongodb
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017/mydatabase
 
-  mongodb:
-    image: mongo
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongo-data:/data/db
-  
-  mongo-express:
-    image: mongo-express:latest
-    ports:
-      - '8081:8081'
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-    depends_on:
-      - mongodb
 
-volumes:
-  mongo-data:
+#   mongodb:
+#     image: mongo
+#     container_name: mongodb
+#     ports:
+#       - '27017:27017'
+#     volumes:
+#       - mongo-data:/data/db
+
+#   mongo-express:
+#     image: mongo-express:latest
+#     ports:
+#       - '8081:8081'
+#     environment:
+#       - ME_CONFIG_MONGODB_SERVER=mongodb
+#     depends_on:
+#       - mongodb
+
+# volumes:
+#   mongo-data:

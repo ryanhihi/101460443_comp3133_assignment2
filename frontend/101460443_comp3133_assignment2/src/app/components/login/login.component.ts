@@ -1,23 +1,43 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Apollo } from 'apollo-angular';
+import { LOGIN_USER } from '../../graphql/user.queries';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  title = 'Login Page';
+  usernameOrEmail =  '';
+  password = '';
+  error: string | null = null;
 
-  constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
+  constructor(private apollo: Apollo) {}
+
+  login() {
+
+    this.apollo
+    .watchQuery({
+      query: LOGIN_USER,
+      variables: {
+        usernameOrEmail: this.usernameOrEmail,
+        password: this.password,
+      },
+    })
+    .valueChanges.subscribe(
+      (result: any) => {
+        console.log('Login successful:', result.data.login);
+        localStorage.setItem('token', result.data.login.token);
+      },
+      (error) => {
+        this.error = error.message;
+      }
+    );
   }
 
-  onSubmit() {
-    console.log(this.loginForm.value);
-    // Send login details to backend
-  }
 }

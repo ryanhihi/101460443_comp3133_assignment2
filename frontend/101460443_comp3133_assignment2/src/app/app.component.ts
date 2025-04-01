@@ -1,23 +1,31 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormGroup, FormControl, FormsModule, Validators } from '@angular/forms';
+import { LOGIN_USER, SIGNUP_USER } from './graphql/user.queries';
+import { Apollo } from 'apollo-angular';
+
+
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive,
-            FormsModule, LoginComponent,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
+            FormsModule,ReactiveFormsModule
 
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = '101460443_comp3133_assignment2';
+  title = 'Employment Management App - Assignment 2';
+
+  users: any[] = [];
+  error: any;
+
+  loginForm = new FormGroup({
+    
+
+  });
+
+  
 }

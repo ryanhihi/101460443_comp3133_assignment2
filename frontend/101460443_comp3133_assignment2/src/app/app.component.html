@@ -1,4 +1,4 @@
-<h1>Employee Management App</h1>
+<h1>{{ title }}</h1>
 <br>
 <div>
   <p>You need to login or Sign Up to begin</p>
@@ -7,17 +7,19 @@
 <nav>
   <ul>
     <li>
-      <a routerLink="/login" routerLinkActive="active" aria-current="page">
+      <a routerLink="login" routerLinkActive="active" aria-current="page">
         Login to Existing Account
       </a>
     </li>
     <li>
-      <a routerLink="/signup" routerLinkActive="active" aria-current="page">
+      <a routerLink="signup" routerLinkActive="active" aria-current="page">
         Sign Up for a New Account
       </a>
     </li>
   </ul>
 </nav>
+<hr/>
+<router-outlet></router-outlet>
 
 <footer>
   <p>Developed by Ryan Tran</p>

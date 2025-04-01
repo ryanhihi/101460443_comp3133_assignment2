@@ -30,7 +30,7 @@ services:
       context: ./frontend/101460443_comp3133_assignment2
       dockerfile: Dockerfile
     ports:
-      - '4200:4200'
+      - '4200:80'
     depends_on:
       - backend
     

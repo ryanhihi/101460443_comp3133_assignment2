@@ -1,43 +1,42 @@
-import { Component } from '@angular/core';
-import {Apollo } from 'apollo-angular';
-import { LOGIN_USER } from '../../graphql/user.queries';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  standalone: true,  // 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  imports: [ReactiveFormsModule, CommonModule] 
 })
 export class LoginComponent {
-  title = 'Login Page';
-  usernameOrEmail =  '';
-  password = '';
-  error: string | null = null;
+  loginForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private apollo: Apollo) {}
+  // Use inject to inject the dependencies (since we're standalone)
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
 
-  login() {
-
-    this.apollo
-    .watchQuery({
-      query: LOGIN_USER,
-      variables: {
-        usernameOrEmail: this.usernameOrEmail,
-        password: this.password,
-      },
-    })
-    .valueChanges.subscribe(
-      (result: any) => {
-        console.log('Login successful:', result.data.login);
-        localStorage.setItem('token', result.data.login.token);
-      },
-      (error) => {
-        this.error = error.message;
-      }
-    );
+  constructor() {
+    this.loginForm = this.fb.group({
+      usernameOrEmail: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
   }
 
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const { usernameOrEmail, password } = this.loginForm.value;
+
+    // Simulate authentication (replace with real API call)
+    if (usernameOrEmail === 'admin' && password === 'password') {
+      this.router.navigate(['/dashboard']); // Redirect after successful login
+    } else {
+      this.errorMessage = 'Invalid username or password';
+    }
+  }
 }

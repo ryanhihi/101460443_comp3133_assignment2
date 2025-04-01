@@ -1,33 +1,103 @@
+/* Full-page container */
 .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7fc; /* Light background color */
     text-align: center;
+  }
+  
+  /* Title Style - Closer to Form */
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem; /* Reduce space between title and form */
+    color: #333;
+  }
+  
+  /* Form Wrapper */
+  form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Form input fields */
+  label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    display: block;
   }
   
   input {
     width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    display: block;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
   }
   
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Error message */
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Submit button */
   button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
+    width: 100%;
+    padding: 1rem;
+    background-color: #007bff;
+    color: #fff;
     border: none;
+    border-radius: 4px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
   button:hover {
-    background-color: #218838;
+    background-color: #0056b3;
   }
   
-  .error {
-    color: red;
-    font-size: 14px;
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Navigation - Stick to Bottom */
+  nav {
+    position: absolute;
+    bottom: 2rem;
+    text-align: center;
+    width: 100%;
+  }
+  
+  nav a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  footer p {
+    margin: 5px 0;
+    font-weight: 500;
   }
   

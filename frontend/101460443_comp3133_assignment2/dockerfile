@@ -1,7 +1,15 @@
-FROM node:16-alpine as build
+# Use Node.js to build the Angular app
+FROM node:18-alpine AS build
 WORKDIR /app
-COPY package.json ./
-RUN npm run build --prod
-FROM nginx:alpine
+COPY package.json package-lock.json ./
+RUN npm install
 COPY . .
+RUN npm run build --prod
+
+# Use Nginx to serve the built Angular app
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=build /app/dist/101460443-comp3133-assignment2 .  
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

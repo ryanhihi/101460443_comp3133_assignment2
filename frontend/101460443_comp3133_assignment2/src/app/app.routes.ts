@@ -1,8 +1,9 @@
-import { Routes, provideRouter } from '@angular/router';
+import { Routes, provideRouter, CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { firstValueFrom } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 // Import components
 import { HomeComponent } from './components/home/home.component';
@@ -22,9 +23,9 @@ const GET_EMPLOYEE_IDS = gql`
   }
 `;
 
-// Function to fetch employee IDs
-const fetchEmployeeIds = async (): Promise<{ id: string }[]> => {
-  const apollo = inject(Apollo);
+// Resolver Function to Fetch Employee IDs
+const fetchEmployeeIds = async () => {
+  const apollo = inject(Apollo); // Proper Angular Injection
   try {
     const result = await firstValueFrom(apollo.query<{ employees: { id: string }[] }>({ query: GET_EMPLOYEE_IDS }));
     return result?.data?.employees.map((employee) => ({ id: employee.id })) || [];
@@ -34,22 +35,31 @@ const fetchEmployeeIds = async (): Promise<{ id: string }[]> => {
   }
 };
 
+ 
+// Auth Guard to Protect Routes
+const authGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  return authService.isAuthenticated();
+};
+
 // Define Routes
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'employees', component: EmployeeListComponent },
-  { path: 'employees/add', component: AddEmployeeComponent },
+  { path: 'employees', component: EmployeeListComponent, canActivate: [authGuard] },
+  { path: 'employees/add', component: AddEmployeeComponent, canActivate: [authGuard] },
   { 
     path: 'employees/update/:id', 
-    component: UpdateEmployeeComponent, 
-    data: { prerenderIds: fetchEmployeeIds }
+    component: UpdateEmployeeComponent,
+    canActivate: [authGuard],
+    resolve: { prerenderIds: fetchEmployeeIds }
   },
   { 
     path: 'employees/details/:id', 
-    component: EmployeeDetailsComponent, 
-    data: { prerenderIds: fetchEmployeeIds }
+    component: EmployeeDetailsComponent,
+    canActivate: [authGuard],
+    resolve: { prerenderIds: fetchEmployeeIds }
   }
 ];
 

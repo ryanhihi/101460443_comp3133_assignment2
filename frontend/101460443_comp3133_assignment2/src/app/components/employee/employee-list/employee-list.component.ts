@@ -1,11 +1,20 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from '../../../graphql/employee.queries';
 @Component({
   selector: 'app-employee-list',
-  imports: [],
   templateUrl: './employee-list.component.html',
-  styleUrl: './employee-list.component.css'
+  styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit {
+  employees: any[] = [];
 
+  constructor(private employeeService: EmployeeService) {}
+
+  ngOnInit(): void {
+    this.employeeService.getEmployees().subscribe(result => {
+      this.employees = result.data.employees;
+    });
+  }
+
+  
 }

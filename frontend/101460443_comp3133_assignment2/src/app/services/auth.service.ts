@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { LOGIN_USER } from '../graphql/user.queries';
@@ -17,12 +18,15 @@ export class AuthService {
       .watchQuery({
         query: LOGIN_USER,
         variables: { usernameOrEmail, password },
+        fetchPolicy: 'no-cache' // Avoid cached login response
       })
       .valueChanges.pipe(
         map((result: any) => {
-          if (result.data && result.data.login.token) {
-            localStorage.setItem(this.tokenKey, result.data.login.token);
-            return result.data.login;
+          const token = result?.data?.login?.token;
+          const user = result?.data?.login?.user;
+          if (token && user) {
+            localStorage.setItem(this.tokenKey, token);
+            return { token, user };
           }
           throw new Error('Invalid login response');
         }),

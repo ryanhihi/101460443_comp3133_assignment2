@@ -3,7 +3,6 @@ import { inject } from '@angular/core';
 import { AuthService } from './services/auth.service';
 
 // Import components
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { EmployeesComponent } from './components/employees/employees.component';

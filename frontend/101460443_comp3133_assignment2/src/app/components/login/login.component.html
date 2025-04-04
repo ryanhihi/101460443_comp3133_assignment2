@@ -6,7 +6,7 @@
       {{ errorMessage }}
     </div>
   
-    <!-- Login Form -->
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <label for="usernameOrEmail">Username or Email:</label>
       <input
@@ -27,13 +27,8 @@
       <button type="submit" [disabled]="loginForm.invalid">Login</button>
     </form>
 <nav>
-    <a routerLink="/signup">Sign up for a new account?</a>
+    <a routerLink="/signup" routerLinkActive="router-link-active">Sign up for a new account?</a>
 </nav>
   </div>
  
-  <footer>
-    <h3>Employee Management App</h3>
-    <p>Ryan Tran - 101460443</p>
-    <p>Winter 2025</p>
 
-</footer>

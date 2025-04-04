@@ -1,0 +1,75 @@
+<h2>Employee List</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employeeList">
+      <td>{{ employee.id }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.email }}</td>
+      <td>
+        <button (click)="viewDetails(employee)">View</button>
+        <button (click)="enableEdit(employee)">Edit</button>
+        <button (click)="deleteEmployee(employee.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- View Full Details -->
+<div *ngIf="selectedEmployee && editingId === null" style="margin-top: 20px;">
+  <h3>Employee Details</h3>
+  <p><strong>ID:</strong> {{ selectedEmployee.id }}</p>
+  <p><strong>First Name:</strong> {{ selectedEmployee.firstName }}</p>
+  <p><strong>Last Name:</strong> {{ selectedEmployee.lastName }}</p>
+  <p><strong>Email:</strong> {{ selectedEmployee.email }}</p>
+  <p><strong>Gender:</strong> {{ selectedEmployee.gender }}</p>
+  <p><strong>Designation:</strong> {{ selectedEmployee.designation }}</p>
+  <p><strong>Salary:</strong> {{ selectedEmployee.salary }}</p>
+  <p><strong>Date of Joining:</strong> {{ selectedEmployee.dateOfJoining }}</p>
+  <p><strong>Department:</strong> {{ selectedEmployee.department }}</p>
+  <p><strong>Photo:</strong></p>
+  <img [src]="selectedEmployee.employeePhoto" width="100" *ngIf="selectedEmployee.employeePhoto" />
+  <p><strong>Last Updated:</strong> {{ selectedEmployee.timestamps }}</p>
+</div>
+
+<!-- Edit Form -->
+<div *ngIf="editingId">
+  <h3>Edit Employee</h3>
+  <form (ngSubmit)="updateEmployee()">
+    <label>First Name:</label>
+    <input [(ngModel)]="updatedEmployee.firstName" name="firstName" required />
+
+    <label>Last Name:</label>
+    <input [(ngModel)]="updatedEmployee.lastName" name="lastName" required />
+
+    <label>Email:</label>
+    <input [(ngModel)]="updatedEmployee.email" name="email" required />
+
+    <label>Gender:</label>
+    <input [(ngModel)]="updatedEmployee.gender" name="gender" />
+
+    <label>Designation:</label>
+    <input [(ngModel)]="updatedEmployee.designation" name="designation" />
+
+    <label>Salary:</label>
+    <input [(ngModel)]="updatedEmployee.salary" name="salary" />
+
+    <label>Date of Joining:</label>
+    <input [(ngModel)]="updatedEmployee.dateOfJoining" name="dateOfJoining" />
+
+    <label>Department:</label>
+    <input [(ngModel)]="updatedEmployee.department" name="department" />
+
+    <br />
+    <button type="submit">Save</button>
+    <button type="button" (click)="cancelEdit()">Cancel</button>
+  </form>
+</div>

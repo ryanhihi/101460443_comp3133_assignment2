@@ -3,12 +3,11 @@
     <p>Please log in or sign up to get started.</p>
 
     <nav>
-        <a routerLink="/login">Login</a> | <a routerLink="/signup">Sign Up</a>
+        <a routerLink="/login" routerLinkActive="router-link-active">Login</a> | 
+        <a routerLink="/signup" routerLinkActive="router-link-active">Sign Up </a>
     </nav>
+
+    <router-outlet></router-outlet>
 </div>
 
-<footer>
-    <h3>Employee Management App</h3>
-    <p>Ryan Tran - 101460443</p>
-    <p>Winter 2025</p>
-</footer>
+

@@ -1,7 +1,7 @@
 <!-- Sign Up Form -->
 
 <div class="signup-container">
-    <h2>Sign Up To Begin</h2>
+    
 
   
     <!-- Show error message if any -->
@@ -11,6 +11,10 @@
   
     <!-- Sign Up Form -->
     <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <h2>Sign Up To Begin</h2>
+
+      
+
       <label for="username">Username:</label>
       <input type="text" id="username" formControlName="username" required />
   
@@ -21,17 +25,14 @@
       <input type="password" id="password" formControlName="password" required />
   
       <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+
+     
+        
+      
     </form>
+
+    <a routerLink="/login" routerLinkActive="router-link-active" >Already have an account? Login</a>
   
-    <!-- Navigation Links -->
-    <nav class="'login">
-      <a routerLink="/login">Already have an account? Login</a>
-    </nav>
   </div>
   
-  <footer>
-    <h3>Employee Management App</h3>
-    <p>Ryan Tran - 101460443</p>
-    <p>Winter 2025</p>
-
-</footer>
+  

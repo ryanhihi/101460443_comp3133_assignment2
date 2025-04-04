@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { LOGIN_USER } from '../graphql/user.queries';
+import { SIGNUP_USER } from '../graphql/user.queries';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -33,6 +34,21 @@ export class AuthService {
         catchError(error => {
           console.error('Login failed:', error);
           return throwError(() => new Error('Login failed. Please try again.'));
+        })
+      );
+  }
+
+  signup(username: string, email: string, password: string): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: SIGNUP_USER,
+        variables: { username, email, password },
+      })
+      .pipe(
+        map((result: any) => result?.data?.signup),
+        catchError(error => {
+          console.error('Signup failed:', error);
+          return throwError(() => new Error('Signup failed. Please try again.'));
         })
       );
   }

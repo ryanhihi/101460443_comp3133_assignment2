@@ -1,32 +1,43 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
+  imports: [ReactiveFormsModule, NgIf, RouterModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
 })
 export class SignupComponent {
   signupForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private authService: AuthService, // Inject AuthService 
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.signupForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required],
     });
   }
 
-  signup() {
-    if (this.signupForm.invalid) return;
+  signup(): void {
     const { username, email, password } = this.signupForm.value;
-    console.log('User Details:', username, email, password);
-    this.router.navigate(['/login']);
+    this.authService.signup(username, email, password).subscribe({
+      next: (data) => {
+        // After successful signup, navigate to Employees page
+        this.router.navigate(['/employee']);
+      },
+      error: (err) => {
+        this.errorMessage = 'An error occurred during signup. Please try again.';
+      },
+    });
   }
 }

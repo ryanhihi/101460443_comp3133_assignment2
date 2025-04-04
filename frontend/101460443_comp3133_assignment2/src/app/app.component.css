@@ -1,0 +1,77 @@
+/* Container for main content */
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Title styling */
+  .container h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Subtitle styling */
+  .container p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Navigation links */
+  .container nav {
+    margin-bottom: 30px;
+  }
+  
+  .container nav a {
+    font-size: 1.2em;
+    color: #007BFF;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .container nav a:hover {
+    color: #0056b3;
+  }
+  
+  /* Active link styling */
+  .container nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  /* Footer styles */
+  footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1em;
+    color: #333;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  footer p {
+    margin: 0;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .container h1 {
+      font-size: 2em;
+    }
+  
+    .container p {
+      font-size: 1em;
+    }
+  
+    .container nav a {
+      font-size: 1em;
+    }
+  }
+  

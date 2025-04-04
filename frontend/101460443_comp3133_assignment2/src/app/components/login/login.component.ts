@@ -1,43 +1,43 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,  // 
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, RouterOutlet] 
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
-  // Use inject to inject the dependencies (since we're standalone)
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-
-  constructor() {
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
-      usernameOrEmail: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      usernameOrEmail: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
-  onSubmit() {
-    if (this.loginForm.invalid) {
-      return;
-    }
-
+  login(): void {
     const { usernameOrEmail, password } = this.loginForm.value;
-
-    // Simulate authentication (replace with real API call)
-    if (usernameOrEmail === 'admin' && password === 'password') {
-      this.router.navigate(['/dashboard']); // Redirect after successful login
-    } else {
-      this.errorMessage = 'Invalid username or password';
-    }
+    this.authService.login(usernameOrEmail, password).subscribe({
+      next: (data) => {
+        // After successful login, navigate to Employees page
+        this.router.navigate(['/employee']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Invalid credentials. Please try again.';
+      },
+    });
   }
 }

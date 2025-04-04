@@ -1,34 +1,25 @@
+<!-- Login Form -->
 <div class="login-container">
-
-    <h2>Login To Manage Employee</h2>
-
-    <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
-    </div>
-  
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <label for="usernameOrEmail">Username or Email:</label>
-      <input
-        type="text"
-        id="usernameOrEmail"
-        formControlName="usernameOrEmail"
-        required
-      />
-  
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        required
-      />
-  
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
-    </form>
-<nav>
-    <a routerLink="/signup" routerLinkActive="router-link-active">Sign up for a new account?</a>
-</nav>
+  <!-- Show error message if any -->
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
   </div>
- 
 
+  <!-- Login Form -->
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2>Login</h2>
+
+    <label for="usernameOrEmail">Username or Email:</label>
+    <input type="text" id="usernameOrEmail" formControlName="usernameOrEmail" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" required />
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+
+  <!-- Link to signup page -->
+  <a routerLink="/signup" routerLinkActive="router-link-active">
+    Don't have an account? Sign Up
+  </a>
+</div>

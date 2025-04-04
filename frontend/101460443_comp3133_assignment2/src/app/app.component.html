@@ -1,14 +1,15 @@
-
-<h1>{{ title }}</h1>
-
-
 <div class="container">
-  <h1>Welcome to the Employee Management App!</h1>
-  <p>Please log in or sign up to get started.</p>
+  <h1>{{ title }}</h1>
+  <p>{{ subtitle }}</p>
 
   <nav>
-      <a routerLink="/login" routerLinkActive="router-link-active">Login</a> | 
-      <a routerLink="/signup" routerLinkActive="router-link-active">Sign Up </a>
+    <a routerLink="/signup" routerLinkActive="active">Sign Up</a> || 
+    <a routerLink="/login" routerLinkActive="active">Login</a>
   </nav>
 
+  <router-outlet></router-outlet>
 </div>
+
+<footer>
+  <p>{{ mark }}</p>
+</footer>

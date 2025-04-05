@@ -30,7 +30,7 @@ services:
       context: ./frontend/101460443_comp3133_assignment2
       dockerfile: Dockerfile
     ports:
-      - '4200:80'
+      - '4200:4200'
     depends_on:
       - backend
     
@@ -40,22 +40,3 @@ networks:
 
 
 
-#   mongodb:
-#     image: mongo
-#     container_name: mongodb
-#     ports:
-#       - '27017:27017'
-#     volumes:
-#       - mongo-data:/data/db
-
-#   mongo-express:
-#     image: mongo-express:latest
-#     ports:
-#       - '8081:8081'
-#     environment:
-#       - ME_CONFIG_MONGODB_SERVER=mongodb
-#     depends_on:
-#       - mongodb
-
-# volumes:
-#   mongo-data:

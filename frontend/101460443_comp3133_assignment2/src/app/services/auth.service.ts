@@ -1,4 +1,3 @@
-// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { LOGIN_USER } from '../graphql/user.queries';
@@ -14,19 +13,26 @@ export class AuthService {
 
   constructor(private apollo: Apollo) {}
 
+  // Check if we are running in the browser
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  }
+
   login(usernameOrEmail: string, password: string): Observable<any> {
     return this.apollo
       .watchQuery({
         query: LOGIN_USER,
         variables: { usernameOrEmail, password },
-        fetchPolicy: 'no-cache' // Avoid cached login response
+        fetchPolicy: 'no-cache', // Avoid cached login response
       })
       .valueChanges.pipe(
         map((result: any) => {
           const token = result?.data?.login?.token;
           const user = result?.data?.login?.user;
           if (token && user) {
-            localStorage.setItem(this.tokenKey, token);
+            if (this.isBrowser()) {
+              localStorage.setItem(this.tokenKey, token);
+            }
             return { token, user };
           }
           throw new Error('Invalid login response');
@@ -54,11 +60,16 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.tokenKey);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    if (this.isBrowser()) {
+      return localStorage.getItem(this.tokenKey);
+    }
+    return null;
   }
 
   isAuthenticated(): boolean {

@@ -1,6 +1,16 @@
 FROM node:18-alpine
+
 WORKDIR /app
-COPY package.json ./
+
+# Install dependencies first for better layer caching
+COPY package*.json ./
 RUN npm install
+
+# Copy the rest of the app
 COPY . .
-CMD ["node", "./server.js"]
+
+# Expose app port
+EXPOSE 5000
+
+# Start server
+CMD ["node", "server.js"]
